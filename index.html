@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Legajo de empresa</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">  
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <header>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+          <button class="button" id="limpiarStorage">
+            Resetear registro de legajos
+          </button>
+          <button class="button" id="btnAgregarEmpleado">
+            Agregar empleado
+          </button>
+        </div>
+        <div class="col-md-6">
+          <div id="contenedorUsuario" hidden>
+            <p id="textoUsuario">Legajo de Empresa S.A.S. - Usuario: </p>
+          </div>
+          <div id="contenedorIdentificacion">
+            <h2>Nombre de usuario</h2>
+            <form id="formularioIdentificacion">
+              <div class="row">
+                <div class="col-md-8">
+                  <div>
+                    <label class="form-label">Nombre</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="inputUsuario"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="col-md-4 d-flex align-items-end">
+                  <button type="submit" class="btn btn-secondary">
+                    Identificarse
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <hr />
+</header>
+<main>
+<div class="row">
+        <div class="col-md-12">
+          <div id="contenedorEmpleados" class="row"></div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="modal fade"
+      id="modalAddLegajo"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Nuevo empleado</h5>
+            <button
+              type="button"
+              class="btn-close btnCerrarModalAgregarEmpleado"
+              aria-label="Close"
+            ></button>
+          </div>
+          <form id="formularioAgregarEmpleado">
+            <div class="modal-body">
+              <div class="mb-3">
+                <label class="form-label">Número de legajo</label>
+                <input type="text" class="form-control" id="inputId" required />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Nombre y apellido</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="inputNombreEmpleado"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="opciones">Género</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="inputGenero"
+                  required
+                />
+              </div>
+              
+
+              <div class="mb-3">
+                <label class="form-label">Puesto</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="inputPuesto"
+                  required
+                />
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Sueldo mensual (pesos argentinos)</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="inputSueldoBruto"
+                  required
+                />
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Antigüedad</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="inputAnios"
+                  required
+                />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary btnCerrarModalAgregarEmpleado"
+              >
+                Cerrar
+              </button>
+              <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <label for="" class="ndlc">Nombre de la ciudad:</label>
+    <input type="text" id="ciudad">
+    <button id="btn">Obtener Clima</button>
+    <output>
+        <p id="temperatura"></p>
+    </output>
+</main>
+<footer>
+    <script>
+        const btn = document.querySelector('#btn')
+
+        btn.addEventListener('click', () => {
+            const key = "0ca063b746578ffb14d9f9455bdb165a";
+            let ciudad = document.querySelector('#ciudad').value;
+            ciudad = encodeURIComponent(ciudad)
+
+            if (ciudad != "") {
+                let url = `https://api.openweathermap.org/data/2.5/weather?q=${ciudad}&appid=${key}`
+                fetch(url)
+                    .then((res) => {
+                        return res.json()
+                    })
+                    .then((clima) => {
+                        let temp = clima.main.temp
+                        let tempC = temp - 273.15
+                        let html = document.querySelector('#temperatura')
+                        html.innerHTML = tempC.toFixed(0)
+
+                        if (tempC < 10) {
+                            html.className = "frio"
+                        } else {
+                            html.className = "caliente"
+                        }
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                    })
+            }
+        })
+    </script>
+</footer>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@2.3.0/build/global/luxon.min.js"></script>
+  <script src="index.js"></script>
+  </body>
+</html>

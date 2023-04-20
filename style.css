@@ -1,0 +1,35 @@
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital@0;1&family=Roboto:ital@0;1&display=swap");
+/* Estilo general */
+* {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  background-color: rgb(137, 155, 159);
+  background-image: 1;
+  box-sizing: border-box;
+  font-size: large;
+}
+p {
+    font-family: "Poppins", sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    line-height: 40px;
+    letter-spacing: 1px;
+}
+button {
+    background-color: white;
+}
+#temperatura {
+  margin: 5px 5px 5px 200px;
+  font-size: 30px;
+  padding: 3px 3px;
+}
+
+.frio {
+  color: rgb(234, 237, 241);
+}
+
+.caliente {
+  color: rgb(233, 18, 18);
+}
